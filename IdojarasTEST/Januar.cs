@@ -8,11 +8,11 @@ namespace IdojarasSQL
 {
     internal class Januar
     {
-        public int Id
-        public int Datum
-        public int Homerseklet
-        public int Csapadek
-        public int Parataltalom
+        public int Id;
+        public int Datum;
+        public int Homerseklet;
+        public int Csapadek;
+        public int Parataltalom;
 
         public Januar(int id, int datum, int homerseklet, int csapadek, int parataltalom)
         {
