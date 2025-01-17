@@ -10,7 +10,25 @@ namespace IdojarasSQL
         private static string password = "";
         private static List<Januar> januarList = new List<Januar>();
 
+        private static string connectionString = $"Server={server};Database={database};User ID={user};Password={password};";
+        public static MySqlConnection connection = new MySqlConnection(connectionString);
 
+        static void Main(string[] args)
+        {
+            KapcsolodasAdatbazishoz();
+        }
 
+        private static void KapcsolodasAdatbazishoz()
+        {
+            try
+            {
+                connection.Open();
+                Console.WriteLine("Kapcsolat sikeresen megnyitva.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Hiba a kapcsolat megnyitásakor: " + ex.Message);
+            }
+        }
     }
 }
