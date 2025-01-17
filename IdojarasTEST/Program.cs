@@ -9,7 +9,7 @@ namespace IdojarasSQL
         private static string user = "root";
         private static string password = "";
         private static List<Januar> januarList = new List<Januar>();
-
+        /*teszt hihi*/
         private static string connectionString = $"Server={server};Database={database};User ID={user};Password={password};";
         public static MySqlConnection connection = new MySqlConnection(connectionString);
 
