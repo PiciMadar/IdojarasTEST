@@ -2,7 +2,7 @@
 
 namespace IdojarasSQL
 {
-    internal class Program
+    internal class Program  /* <------ EZ is egy osztály, oda van írva */
     {
         private static string server = "localhost";
         private static string database = "idojaras3";
@@ -16,13 +16,45 @@ namespace IdojarasSQL
         static void Main(string[] args)
         {
             KapcsolodasAdatbazishoz();
-            SelectTable("idojaras");
+            SelectTable("idojaras") /* <-----   Paraméteres függvényhasználat 😊*/;
             for (int i = 0; i < januarList.Count; i++) 
             {
                 Console.WriteLine(januarList[i].ToString());
             }
             Beolvasas();
             UjSor();
+            AtlagHomerseklet();
+            LegnagyobbParatartalom();
+        }
+
+        private static void LegnagyobbParatartalom()
+        {
+            int maxPara = 0;
+            int sameDb = 0;
+            for (int i = 0;i < januarList.Count; i++)
+            {
+                if (januarList[i].Parataltalom > maxPara)
+                {
+                    maxPara = januarList[i].Parataltalom;
+                }
+                else if (januarList[i].Parataltalom == maxPara)
+                {
+                    sameDb++;
+                }
+            }
+            Console.WriteLine($"\n-------------------------------------\n A legnagyobb páratartalom: {maxPara}\n Ezt a számot {sameDb} alkalommal érte el ismét");
+        }
+
+        private static void AtlagHomerseklet()
+        {   
+            float AtlagHom = 0;
+            int OsszHom = 0;
+            for (int i = 0; i < januarList.Count; i++)
+            {
+                OsszHom += januarList[i].Homerseklet;
+            }
+            AtlagHom = OsszHom / januarList.Count();
+            Console.WriteLine($"\n-------------------------------------\nÁtlag hőmérséklet: \n{AtlagHom}C°");
         }
 
         private static void UjSor()
