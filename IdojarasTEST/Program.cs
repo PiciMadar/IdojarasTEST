@@ -27,12 +27,37 @@ namespace IdojarasSQL
             UjSor();
             AtlagHomerseklet();
             LegnagyobbParatartalom();
-            LegTobbCsapadek();
+            MeteorologusBeolvas("meteorologusok");
+            EloMeteorologusok();
         }
 
-        private static void LegTobbCsapadek()
+        private static void EloMeteorologusok()
         {
 
+            for (int i = 0; i < MetList.Count; i++)
+            {
+                if (MetList[i].SzulEv > 1935 )
+                {
+                    Console.WriteLine(MetList[i].ToString());
+                }
+            }
+
+        }
+
+        private static void MeteorologusBeolvas(string v)
+        {
+            using (MySqlCommand command = new MySqlCommand($"select * from {v}", connection))
+            {
+                MetList.Clear();
+                using (MySqlDataReader mySqlDataReader = command.ExecuteReader())
+                {
+                    while (mySqlDataReader.Read())
+                    {                    
+                        Meteorologus MetTemp = new Meteorologus(Convert.ToInt32(mySqlDataReader[0]), Convert.ToString(mySqlDataReader[1]), Convert.ToInt32(mySqlDataReader[2]));
+                        MetList.Add(MetTemp);
+                    }
+                }
+            }
         }
 
         private static void LegnagyobbParatartalom()
