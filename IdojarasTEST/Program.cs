@@ -26,7 +26,8 @@ namespace IdojarasSQL
             }
             Beolvasas();
             UjSor();
-            AtlagHomerseklet();
+            int Jan_Hossz = januarList.Count();
+            AtlagHomerseklet(ref Jan_Hossz); /*<----- ref paraméteres*/
             LegnagyobbParatartalom();
             MeteorologusBeolvas("meteorologusok");
             EloMeteorologusok();
@@ -80,11 +81,11 @@ namespace IdojarasSQL
             Console.WriteLine($"\n-------------------------------------\n A legnagyobb páratartalom: {maxPara}\n Ezt a számot {sameDb} alkalommal érte el ismét");
         }
 
-        private static void AtlagHomerseklet()
+        private static void AtlagHomerseklet(ref int JanHossz)
         {   
             float AtlagHom = 0;
             int OsszHom = 0;
-            for (int i = 0; i < januarList.Count; i++)
+            for (int i = 0; i < JanHossz; i++)
             {
                 OsszHom += januarList[i].Homerseklet;
             }
@@ -107,7 +108,7 @@ namespace IdojarasSQL
                     commandInsert.Parameters.AddWithValue("@paratartalom", beolvasottList[IIndex - 1].Parataltalom);
                     commandInsert.ExecuteNonQuery();
 
-                    Console.WriteLine($"Sikeres INSERT!\n{beolvasottList[IIndex].ToString()} feltöltve");
+                    Console.WriteLine($"Sikeres INSERT!\n{beolvasottList[IIndex-1].ToString()} feltöltve");
 
                     //Lista újratöltés...
                     SelectTable("idojaras");
@@ -128,7 +129,7 @@ namespace IdojarasSQL
 
         private static void Beolvasas()
         {
-            string FilePath = "SQL.txt";
+            string FilePath = @"SQL.txt"; /*Ezt majd a "source\repos\IdojarasTEST\IdojarasTEST\bin\Debug\net8.0" kell belerakni*/
             if (File.Exists(FilePath))
             {
                 string[] sorok = File.ReadAllLines(FilePath);

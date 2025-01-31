@@ -8,7 +8,7 @@ namespace IdojarasTEST
 {
     internal class Meteorologus
     {
-        public int Id { get; private set; }
+        public int Id { get; private set; }/*<------- Ha a getterrel kap értéket, public lesz, de alapból privátra rakja a setter. Ezzel nem kell foglalkoznom a privát adattal, de mégse fog zavarni, ha nem kap adatot*/
         public string Nev { get; private set; }
         public int SzulEv { get; private set; }
 
