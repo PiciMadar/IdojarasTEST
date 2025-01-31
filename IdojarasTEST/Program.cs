@@ -11,7 +11,7 @@ namespace IdojarasSQL
         private static string password = "";
         private static List<Januar> januarList = new List<Januar>();
         private static List<Meteorologus> MetList = new List<Meteorologus>();
-        /*teszt hihi*/
+        /*teszt hihi* TESZT*/
         private static string connectionString = $"Server={server};Database={database};User ID={user};Password={password};";
         public static MySqlConnection connection = new MySqlConnection(connectionString);
 
