@@ -8,11 +8,11 @@ namespace IdojarasSQL
 {
     internal class Januar
     {
-        public int Id { get; set; }
-        public int Datum { get; set; }
-        public int Homerseklet { get; set; }
-        public int Csapadek { get; set; }
-        public int Parataltalom { get; set; }
+        public int Id { get; private set; } /*<------- Ha a getterrel kap értéket, public lesz, de alapból privátra rakja a setter. Ezzel nem kell foglalkoznom a privát adattal, de mégse fog zavarni, ha nem kap adatot*/
+        public int Datum { get; private set; }
+        public int Homerseklet { get; private set; }
+        public int Csapadek { get; private set; }
+        public int Parataltalom { get; private set; }
 
 
 

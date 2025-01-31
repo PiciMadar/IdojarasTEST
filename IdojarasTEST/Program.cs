@@ -10,6 +10,7 @@ namespace IdojarasSQL
         private static string user = "root";
         private static string password = "";
         private static List<Januar> januarList = new List<Januar>();
+        private static List<Januar> beolvasottList = new List<Januar>();
         private static List<Meteorologus> MetList = new List<Meteorologus>();
         /*teszt hihi* TESZT*/
         private static string connectionString = $"Server={server};Database={database};User ID={user};Password={password};";
@@ -33,11 +34,12 @@ namespace IdojarasSQL
 
         private static void EloMeteorologusok()
         {
-
+            Console.WriteLine("-------------------\nMég élő Meteorologusok:\n");
             for (int i = 0; i < MetList.Count; i++)
             {
                 if (MetList[i].SzulEv > 1935 )
                 {
+                    Console.WriteLine("<-->");
                     Console.WriteLine(MetList[i].ToString());
                 }
             }
@@ -92,18 +94,20 @@ namespace IdojarasSQL
 
         private static void UjSor()
         {
+            Console.WriteLine($"Kérlek mond meg hanyadik beolvasott adatot szeretnéd INSERT-elni az adatbázisba?0-{beolvasottList.Count}\n(NE INDEX ALAPJÁN ADD MEG)");
+            int IIndex = Convert.ToInt32(Console.ReadLine());
             try
             {
                 using (MySqlCommand commandInsert = new MySqlCommand($"insert into idojaras (id, datum, homerseklet, csapadek, paratartalom) values (@id, @datum, @homerseklet, @csapadek, @paratartalom)", connection))
                 {
-                    commandInsert.Parameters.AddWithValue("@id", januarList[januarList.Count() -1].Id);
-                    commandInsert.Parameters.AddWithValue("@datum", januarList[januarList.Count() - 1].Datum);
-                    commandInsert.Parameters.AddWithValue("@homerseklet", januarList[januarList.Count() - 1].Homerseklet);
-                    commandInsert.Parameters.AddWithValue("@csapadek", januarList[januarList.Count() - 1].Csapadek);
-                    commandInsert.Parameters.AddWithValue("@paratartalom", januarList[januarList.Count() - 1].Parataltalom);
+                    commandInsert.Parameters.AddWithValue("@id", beolvasottList[IIndex-1].Id);
+                    commandInsert.Parameters.AddWithValue("@datum", beolvasottList[IIndex-1].Datum);
+                    commandInsert.Parameters.AddWithValue("@homerseklet", beolvasottList[IIndex - 1].Homerseklet);
+                    commandInsert.Parameters.AddWithValue("@csapadek", beolvasottList[IIndex - 1].Csapadek);
+                    commandInsert.Parameters.AddWithValue("@paratartalom", beolvasottList[IIndex - 1].Parataltalom);
                     commandInsert.ExecuteNonQuery();
 
-                    Console.WriteLine("Sikeres INSERT!");
+                    Console.WriteLine($"Sikeres INSERT!\n{beolvasottList[IIndex].ToString()} feltöltve");
 
                     //Lista újratöltés...
                     SelectTable("idojaras");
@@ -112,7 +116,7 @@ namespace IdojarasSQL
             }
             catch (MySqlException mySqlError)
             {
-                Console.WriteLine("Sikertelen INSERT");
+                Console.WriteLine($"Sikertelen INSERT");
                 Console.WriteLine(mySqlError);
             }
             catch (Exception error)
@@ -133,14 +137,18 @@ namespace IdojarasSQL
                 {
                     string[] mezok = sorok[i].Split(';');
                     Januar UjDatom = new Januar(Convert.ToInt32(mezok[0]), Convert.ToInt32(mezok[1]), Convert.ToInt32(mezok[2]), Convert.ToInt32(mezok[3]), Convert.ToInt32(mezok[4]));
-                    januarList.Add(UjDatom);
+                    beolvasottList.Add(UjDatom);
                 }
             }
             else
             {
                 Console.WriteLine("Valami nem stimmel");
             }
-            Console.WriteLine(januarList[januarList.Count()-1].ToString());
+            Console.WriteLine("----Beolvasott adatok:----");
+            for (int i = 0; i < beolvasottList.Count; i++)
+            {
+                Console.WriteLine(beolvasottList[i].ToString());
+            }
         }
 
         private static void SelectTable(string v)

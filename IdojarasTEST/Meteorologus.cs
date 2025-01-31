@@ -8,9 +8,9 @@ namespace IdojarasTEST
 {
     internal class Meteorologus
     {
-        public int Id { get; set; }
-        public string Nev { get; set; }
-        public int SzulEv { get; set; }
+        public int Id { get; private set; }
+        public string Nev { get; private set; }
+        public int SzulEv { get; private set; }
 
         public Meteorologus(int id, string nev, int szulEv)
         {
@@ -22,6 +22,14 @@ namespace IdojarasTEST
         public override string ToString()
         {
             return $"A(z) {Id} ID-jű, {Nev} névre hallgató meteorológus születési éve: {SzulEv}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Meteorologus meteorologus &&
+                   Id == meteorologus.Id &&
+                   Nev == meteorologus.Nev &&
+                   SzulEv == meteorologus.SzulEv;
         }
     }
 }
